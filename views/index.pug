@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  div(class="content") 
+    h1= title 
+    div(class='messages')
+      each val in messages
+        div(class='message')
+          h3= val.user
+          div
+            p= val.text
+            p= val.added 
+    button(class='post')
+      a(href="http://localhost:3000/new")= 'Post a messsage' 
+     

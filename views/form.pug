@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    div(class='content')
+        button 
+            a(href="http://localhost:3000")= "Go back" 
+        form(action="/new", method="post") 
+            div 
+                input(type="text", placeholder="Your Name", name="user", minLength=1, required=true)
+                input(type="text", placeholder="Message", name="message", minLength=1 required=true)
+            button(type="submit")= "Post" 
