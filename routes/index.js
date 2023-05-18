@@ -15,7 +15,9 @@ const messages = [
 ];
 
 router.get('/', function(req, res, next) {
-  res.render('index', { title: "Mini Messageboard", messages: messages.reverse() });
+  let newArr = [];
+  messages.map(val => {newArr.push(val)});
+  res.render('index', { title: "Mini Messageboard", messages: newArr.reverse() });
 });
 
 router.get('/new', function(req, res, next) {
