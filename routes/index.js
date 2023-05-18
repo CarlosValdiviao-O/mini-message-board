@@ -1,20 +1,23 @@
 var express = require('express');
 var router = express.Router();
 
-const messages = [
-  {
-    text: "Hi there!",
-    user: "Amando",
-    added: new Date('2023-05-16T03:46:34.572Z').toDateString()
-  },
-  {
-    text: "Hello World!",
-    user: "Charles",
-    added: new Date('2023-05-16T03:46:34.572Z').toDateString()
-  }
-];
+//let messages = [
+  //{
+  //  text: "Hi there!",
+  //  user: "Amando",
+  //  added: new Date('2023-05-16T03:46:34.572Z').toDateString()
+  //},
+  //{
+  //  text: "Hello World!",
+  //  user: "Charles",
+  //  added: new Date('2023-05-16T03:46:34.572Z').toDateString()
+  //}
+//];
 
-router.get('/', function(req, res, next) {
+const Message = require("../models/message");
+
+router.get('/', async function(req, res, next) {
+  const messages = await Message.find().limit(50).exec();
   let newArr = [];
   messages.map(val => {newArr.push(val)});
   res.render('index', { title: "Mini Messageboard", messages: newArr.reverse() });
@@ -24,9 +27,11 @@ router.get('/new', function(req, res, next) {
   res.render('form');
 });
 
-router.post('/new', function(req, res, next) {
+router.post('/new', async function(req, res, next) {
   let message = req.body;
-  messages.push({text: message.message, user: message.user, added: new Date().toDateString()})
+  const mess = new Message({text: message.message, user: message.user, added: new Date().toDateString()});
+  await mess.save();
+  //messages.push({text: message.message, user: message.user, added: new Date().toDateString()})
   res.redirect('/');
 })
 
