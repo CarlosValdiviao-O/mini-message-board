@@ -8,9 +8,11 @@ var indexRouter = require('./routes/index');
 
 var app = express();
 
+require('dotenv').config()
+
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
-const mongoDB = "mongodb+srv://Carlos:tacosushi@cluster0.go8f7ys.mongodb.net/mini_message_board?retryWrites=true&w=majority";
+const mongoDB = process.env.SECRET_KEY;
 
 main().catch((err) => console.log(err));
 async function main() {
