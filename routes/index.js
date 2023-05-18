@@ -17,7 +17,10 @@ var router = express.Router();
 const Message = require("../models/message");
 
 router.get('/', async function(req, res, next) {
-  const messages = await Message.find().limit(50).exec();
+  const messages = await Message.find().exec();
+  if (messages.length >= 50) {
+    await Message.deleteOne({_id: messages[0]._id})
+  }
   let newArr = [];
   messages.map(val => {newArr.push(val)});
   res.render('index', { title: "Mini Messageboard", messages: newArr.reverse() });
